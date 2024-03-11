@@ -14,9 +14,6 @@ model Car {
   id           Int      @id @default(autoincrement())
   model        String
   image        String
-  licensePlate String
-  mileage      Float
-  transmission String
   fuelType     String
   pricePerDay  Float
   available    Boolean

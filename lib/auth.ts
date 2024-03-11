@@ -1,9 +1,12 @@
-import { User } from "next-auth"
 import { prisma } from "./prisma"
 import { compare } from "bcrypt";
 
+type User = {
+    email: string;
+    password: string;
+}
 
-type loginType = (username: string, email: string, password: string) => Promise<User | null>;
+type loginType = (email: string, password: string) => Promise<User|null>;
 
 export const login: loginType = async (email, password) => {
     const user = await prisma.user.findFirst({
