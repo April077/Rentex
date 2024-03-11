@@ -1,0 +1,46 @@
+// schema.prisma
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define the data model for cars
+model Car {
+  id           Int      @id @default(autoincrement())
+  model        String
+  image        String
+  licensePlate String
+  mileage      Float
+  transmission String
+  fuelType     String
+  pricePerDay  Float
+  available    Boolean
+  rentals      Rental[]
+}
+
+// Define the data model for users
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
+  password String
+  rentals  Rental[]
+}
+
+// Define the data model for rentals
+model Rental {
+  id        Int      @id @default(autoincrement())
+  car       Car      @relation(fields: [id], references: [id])
+  carId     Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  startDate DateTime
+  endDate   DateTime
+  totalCost Float
+  status    String
+}
