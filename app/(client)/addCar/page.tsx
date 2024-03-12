@@ -9,6 +9,27 @@ function page() {
   const [fuel, setFuel] = useState("");
   const [price, setPrice] = useState("");
 
+  const handleClick = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/addcar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: model,
+          image: image,
+          fuelType: fuel,
+          pricePerDay: price,
+        }),
+      });
+      const serverRes = await response.json();
+      console.log(serverRes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="flex">
@@ -55,12 +76,12 @@ function page() {
           <input
             onChange={(e) => setPrice(e.target.value)}
             className="w-2/3  dark:bg- border-[1px] p-2 rounded"
-            type="password"
-            placeholder="Password"
+            type="text"
+            placeholder="Price"
           />
 
           <button
-            onClick={() => {}}
+            onClick={handleClick}
             className="w-2/3 bg-indigo-900 hover:bg-indigo-700 px-8 pb-3 pt-2 rounded font-semibold text-white"
           >
             Add
